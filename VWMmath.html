@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visual memory</title>
+<script src="jsPsych/jspsych.js"></script>
+<script src="jsPsych/extra_plugins/jspsych-wm-fc-math.js"></script>
+<script src="jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
+<script src="jsPsych/plugins/jspsych-instructions.js"></script>
+<script src="jsPsych/plugins/jspsych-survey-text.js"></script>
+<script src="jsPsych/plugins/jspsych-survey-multi-choice.js"></script>
+<link	href="jsPsych/css/jspsych.css"	rel="stylesheet" type="text/css">
+<style>
+.jspsych-instructions-nav { margin-bottom: 100px; }
+#consentDiv { font-size: 9pt; text-align: justify; }
+.optionSim {
+	display: inline-block;
+	width: 90px;
+	height: 90px;
+	background-size: 36000% 100%;
+	background-image: url('Spaces/small180.png');
+	padding: 30px;
+}
+</style>
+</head>
+<body>
+    <script>
+
+
+const questionnaire = {
+            type: 'survey-multi-choice',
+            questions: [
+                { prompt: "A) About how much time have you spent each day thinking about contamination and engaging in washing or cleaning behaviors because of contamination?", options: ["0) None at all", "1) Less than 1 hour each day", "2) Between 1 and 3 hours each day", "3) Between 3 and 8 hours each day", "4) 8 hours or more each day"], required: true },
+                { prompt: "B) To what extent have you avoided situations to prevent concerns with contamination or having to spend time washing, cleaning, or showering?", options: ["0) None at all", "1) A little avoidance", "2) A moderate amount of avoidance", "3) A great deal of avoidance", "4) Extreme avoidance of nearly all things"], required: true },
+                { prompt: "C) How much distress or anxiety have you felt about contamination and possible negative effects for others due to contamination?", options: ["0) None at all", "1) Mild", "2) Moderate", "3) Severe", "4) Extreme"], required: true },
+                { prompt: "D) How much do these concerns with contamination interfere with your social or work life?", options: ["0) None at all", "1) Mildly", "2) Moderately", "3) Severely", "4) Very severely"], required: true },
+                { prompt: "E) How much effort have you put into trying to resist these thoughts about contamination and reducing the time spent on washing or cleaning?", options: ["0) None at all", "1) A little effort", "2) Moderate effort", "3) A lot of effort", "4) Extreme effort"], required: true },
+                { prompt: "F) How much do you control these thoughts about contamination or washing, even when they come to mind?", options: ["0) Complete control", "1) A lot of control", "2) Moderate control", "3) A little control", "4) No control"], required: true },
+                { prompt: "G) About how much of your day has been taken up by checking behaviors to reduce your fear or anxiety, such as checking appliances, locks, or that you've completed something?", options: ["0) None at all", "1) Less than 1 hour each day", "2) Between 1 and 3 hours each day", "3) Between 3 and 8 hours each day", "4) 8 hours or more each day"], required: true },
+                { prompt: "H) How much distress or anxiety have you felt when you have been unable to perform checking behaviors?", options: ["0) None at all", "1) Mild", "2) Moderate", "3) Severe", "4) Extreme"], required: true },
+                { prompt: "I) How much have these checking behaviors interfered with your work or social life?", options: ["0) None at all", "1) Mildly", "2) Moderately", "3) Severely", "4) Very severely"], required: true },
+                { prompt: "J) How much effort have you put into trying to resist these checking behaviors?", options: ["0) None at all", "1) A little effort", "2) Moderate effort", "3) A lot of effort", "4) Extreme effort"], required: true },
+                { prompt: "K) How much control do you have over these checking behaviors?", options: ["0) Complete control", "1) A lot of control", "2) Moderate control", "3) A little control", "4) No control"], required: true },
+                { prompt: "L) About how much of your day has been taken up by ordering behaviors to reduce your fear or anxiety, such as arranging items in a particular way?", options: ["0) None at all", "1) Less than 1 hour each day", "2) Between 1 and 3 hours each day", "3) Between 3 and 8 hours each day", "4) 8 hours or more each day"], required: true },
+                { prompt: "M) How much distress or anxiety have you felt when items are not ordered in the way you prefer?", options: ["0) None at all", "1) Mild", "2) Moderate", "3) Severe", "4) Extreme"], required: true },
+                { prompt: "N) How much have these ordering behaviors interfered with your work or social life?", options: ["0) None at all", "1) Mildly", "2) Moderately", "3) Severely", "4) Very severely"], required: true },
+                { prompt: "O) How much effort have you put into trying to resist these ordering behaviors?", options: ["0) None at all", "1) A little effort", "2) Moderate effort", "3) A lot of effort", "4) Extreme effort"], required: true },
+                { prompt: "P) How much control do you have over these ordering behaviors?", options: ["0) Complete control", "1) A lot of control", "2) Moderate control", "3) A little control", "4) No control"], required: true },
+                { prompt: "Q) About how much of your day has been taken up by collecting, saving, or not discarding objects because you fear negative consequences for yourself or others if discarded?", options: ["0) None at all", "1) Less than 1 hour each day", "2) Between 1 and 3 hours each day", "3) Between 3 and 8 hours each day", "4) 8 hours or more each day"], required: true },
+                { prompt: "R) How much distress or anxiety have you felt when you have tried to discard saved or collected objects?", options: ["0) None at all", "1) Mild", "2) Moderate", "3) Severe", "4) Extreme"], required: true },
+                { prompt: "S) How much have these saving behaviors interfered with your work or social life?", options: ["0) None at all", "1) Mildly", "2) Moderately", "3) Severely", "4) Very severely"], required: true },
+                { prompt: "T) How much effort have you put into trying to resist these saving or collecting behaviors?", options: ["0) None at all", "1) A little effort", "2) Moderate effort", "3) A lot of effort", "4) Extreme effort"], required: true }
+            ],
+            randomize_question_order: false,
+            preamble: "<strong>Please answer the following questions:</strong>",
+            button_label: "Continue"
+        };
+
+        // Define paths to image folders
+        const folderPaths = {
+            Pos: {
+                HappyO2: "Faces/Pos/HappyO2",
+                HappyC2: "Faces/Pos/HappyC2"
+            },
+            Neg: {
+                Fear2: "Faces/Neg/Fear2",
+                Angry2: "Faces/Neg/Angry2"
+            }
+        };
+        trialsInst.push({
+	type: "instructions",
+	pages: ['<p>Welcome and thank you for paricipating! In this experiment you will be asked to remember faces over a brief interval, and then to report to your memory for one of the faces.</p><p> You will start each trial by using your mouse and clicking on the fixation cross in the center of the screen</p><p>Afterwards, you will be shown four faces and will need to remember their identity and exact spatial locations</p><p>In addition to remembering the faces, you will be asked to do a simple arithmetic task while remembering the face. You will respond to the task using the Z and C keys on your keyboard, where Z means you think an equation is correct and C means you think an equation is incorrect. Please try to respond as quickly as possible on this task, while remembering the face.</p> <p> After you do the arithmetic task one of the locations where a face was shown will be highlighted with a red box and you will also see two faces in the center of the screen. At this point, you will need to report on your memory for one of the faces by using your mouse clicking on the face you think was shown in that spatial location. After you do this, you will start again. Thank you for participating!</p> '],
+  show_clickable_nav: true
+})	
+
+        // List all images with paths for preloading
+        const imageFiles = [];
+        for (const valence in folderPaths) {
+            for (const subfolder in folderPaths[valence]) {
+                const folder = folderPaths[valence][subfolder];
+                for (let i = 1; i <= 100; i++) { // Assume up to 100 images per folder
+                    imageFiles.push(`${folder}/${i}.JPG`);
+                }
+            }
+        }
+
+        // Function to randomly select images from a folder without repetition
+        function getRandomImages(valence, numImages = 4) {
+            const subfolders = Object.keys(folderPaths[valence]);
+            const randomSubfolder = subfolders[Math.floor(Math.random() * subfolders.length)];
+            const folder = folderPaths[valence][randomSubfolder];
+            
+            // Sample unique images from the preloaded list based on the chosen subfolder
+            const availableImages = imageFiles.filter(img => img.includes(folder));
+            const selectedImages = jsPsych.randomization.sampleWithoutReplacement(availableImages, numImages);
+
+            return { selectedImages, folderSource: randomSubfolder };
+        }
+
+        // Generate conditions and trials
+        const num_trials = 60;
+        const faces_per_trial = 4;
+        let trials = [];
+
+        for (let i = 0; i < num_trials; i++) {
+            const is_positive = i < num_trials / 2; // First half positive, second half negative
+            const valence = is_positive ? "Pos" : "Neg";
+            const { selectedImages, folderSource } = getRandomImages(valence, faces_per_trial);
+
+            // Randomly assign one face as target and another as distractor
+            const targetImage = selectedImages[0];
+            const distractorImage = selectedImages[1];
+
+            // Generate an arithmetic equation for this trial
+            const arithmetic_equation = generateEquation();
+
+            // Push trial configuration
+            trials.push({
+                type: 'wm-fc-math',
+                stimuli: selectedImages,
+                test_items: [targetImage, distractorImage],
+                arithmetic_equation: arithmetic_equation.equation,
+                num_placeholders: 8,
+                do_test: true,
+                which_test: 0, // Probe the first face shown as target
+                which_correct: 0, // The first test item is correct
+                feedback: true,
+                click_to_start: true,
+                delay_start: 500,
+                stim_width: 100,
+                stim_height: 100,
+                memory_display_duration: 4000,
+                delay_time: 800,
+                test_location: 0,
+                shuffle_order: true,
+                radius: 140,
+                valence: valence,
+                folderSource: folderSource,
+                arithmetic_correct: arithmetic_equation.is_correct
+            });
+        }
+
+        // Shuffle all trials and add a preload task before starting the experiment
+        trials = jsPsych.randomization.shuffle(trials);
+
+        jsPsych.init({
+            timeline: [questionnaire, ...trials],
+            show_progress_bar: true,
+	    show_preload_progress_bar: true,
+	    auto_update_progress_bar: true,	
+    	preload_images: imageFiles,
+            on_finish: function() {
+                jsPsych.data.displayData(); // Display data at the end
+            }
+        });
+
+        // Helper function to generate arithmetic equations
+        function generateEquation() {
+            const operations = ["+", "-", "*", "/"];
+            const a = Math.floor(Math.random() * 9) + 1;
+            const b = Math.floor(Math.random() * 9) + 1;
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            let correct_answer;
+
+            switch (operation) {
+                case "+":
+                    correct_answer = a + b;
+                    break;
+                case "-":
+                    correct_answer = a - b;
+                    break;
+                case "*":
+                    correct_answer = a * b;
+                    break;
+                case "/":
+                    correct_answer = Math.floor(a / b); // Integer division
+                    break;
+            }
+
+            const is_correct = Math.random() > 0.5;
+            const displayed_answer = is_correct ? correct_answer : correct_answer + (Math.random() < 0.5 ? 1 : -1);
+            return { equation: `${a} ${operation} ${b} = ${displayed_answer}`, is_correct: is_correct };
+        }
+    </script>
+</body>
+</html>

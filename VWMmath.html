@@ -66,7 +66,8 @@ const questionnaire = {
                 Angry2: "Faces/Neg/Angry2"
             }
         };
-        trialsInst.push({
+        let trials = [];
+        trials.push({
 	type: "instructions",
 	pages: ['<p>Welcome and thank you for paricipating! In this experiment you will be asked to remember faces over a brief interval, and then to report to your memory for one of the faces.</p><p> You will start each trial by using your mouse and clicking on the fixation cross in the center of the screen</p><p>Afterwards, you will be shown four faces and will need to remember their identity and exact spatial locations</p><p>In addition to remembering the faces, you will be asked to do a simple arithmetic task while remembering the face. You will respond to the task using the Z and C keys on your keyboard, where Z means you think an equation is correct and C means you think an equation is incorrect. Please try to respond as quickly as possible on this task, while remembering the face.</p> <p> After you do the arithmetic task one of the locations where a face was shown will be highlighted with a red box and you will also see two faces in the center of the screen. At this point, you will need to report on your memory for one of the faces by using your mouse clicking on the face you think was shown in that spatial location. After you do this, you will start again. Thank you for participating!</p> '],
   show_clickable_nav: true
@@ -99,7 +100,7 @@ const questionnaire = {
         // Generate conditions and trials
         const num_trials = 60;
         const faces_per_trial = 4;
-        let trials = [];
+     
 
         for (let i = 0; i < num_trials; i++) {
             const is_positive = i < num_trials / 2; // First half positive, second half negative
